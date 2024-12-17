@@ -64,8 +64,8 @@ expressWs(app);
     logger.debug('Constructing Express App');
     logger.debug('Registering middleware');
 
-    app.use(body_parser.urlencoded({ extended: true }));
-    app.use(body_parser.json());
+    app.use(body_parser.urlencoded({ limit: '20mb', extended: true }));
+    app.use(body_parser.json({ limit: '20mb' }));
 
     app.use((err, req, res, next) => {
         return res.status(400).send({
@@ -73,6 +73,7 @@ expressWs(app);
         });
     });
 
+    logger.info('Updated JSON Length Limit to 20MB.')
     logger.debug('Registering Routes');
 
     const api_v2 = require('./api/v2');

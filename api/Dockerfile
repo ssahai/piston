@@ -32,5 +32,7 @@ COPY ["package.json", "package-lock.json", "./"]
 RUN npm install
 COPY ./src ./src
 
+ENV PISTON_RUN_TIMEOUT=60000
+
 CMD ["/piston_api/src/docker-entrypoint.sh"]
 EXPOSE 2000/tcp

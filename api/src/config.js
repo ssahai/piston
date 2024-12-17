@@ -80,13 +80,13 @@ const options = {
     },
     compile_timeout: {
         desc: 'Max time allowed for compile stage in milliseconds',
-        default: 10000, // 10 seconds
+        default: 60000, // 60 seconds
         parser: parse_int,
         validators: [(x, raw) => !is_nan(x) || `${raw} is not a number`],
     },
     run_timeout: {
         desc: 'Max time allowed for run stage in milliseconds',
-        default: 3000, // 3 seconds
+        default: 60000, // 60 seconds
         parser: parse_int,
         validators: [(x, raw) => !is_nan(x) || `${raw} is not a number`],
     },
@@ -117,7 +117,8 @@ const options = {
     repo_url: {
         desc: 'URL of repo index',
         default:
-            'https://github.com/engineer-man/piston/releases/download/pkgs/index',
+            'http://172.17.0.1:8080/index',
+	    //'https://github.com/ssahai/piston/releases/download/pkgs-cm/index',
         validators: [],
     },
     max_concurrent_jobs: {
