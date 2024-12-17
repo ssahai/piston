@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Put instructions to run the runtime
+# mv $1 $1.java
+# filename=$1.java
+# shift
+# java $filename "$@"
+
+
+# Java run
+mainClass="${1%.java}"
+shift
+java $mainClass "$@"
