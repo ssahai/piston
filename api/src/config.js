@@ -56,7 +56,7 @@ const options = {
     },
     output_max_size: {
         desc: 'Max size of each stdio buffer',
-        default: 1024,
+        default: 20480,
         parser: parse_int,
         validators: [(x, raw) => !is_nan(x) || `${raw} is not a number`],
     },
