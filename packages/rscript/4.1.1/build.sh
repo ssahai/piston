@@ -14,3 +14,11 @@ make install -j$(nproc)
 
 cd ../
 rm -rf build
+
+echo 'Installing haven...'
+"$PREFIX/bin/R" -e 'install.packages("haven", repos="https://cloud.r-project.org")'
+
+
+echo 'Installing modelsummary...'
+"$PREFIX/bin/R" -e 'install.packages("modelsummary", repos="https://cloud.r-project.org")'
+
