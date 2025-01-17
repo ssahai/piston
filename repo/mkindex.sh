@@ -1,4 +1,4 @@
-BASEURL=http://repo:8000/
+BASEURL=http://172.17.0.1:8080/
 
 i=0
 
