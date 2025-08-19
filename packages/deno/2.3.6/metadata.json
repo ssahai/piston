@@ -1,0 +1,14 @@
+{
+    "language": "deno",
+    "version": "2.3.6",
+    "provides": [
+        {
+            "language": "typescript",
+            "aliases": ["deno-ts", "deno"]
+        },
+        {
+            "language": "javascript",
+            "aliases": ["deno-js"]
+        }
+    ]
+}
