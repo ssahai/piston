@@ -4,17 +4,24 @@
 declare -a javaFiles
 
 # Loop through each argument
+first=1
 for file in "$@"; do
-# Check if the file already ends with .java
 if [[ "$file" == *.java ]]; then
-    # If it does, add it directly to the array
+    # Already a Java source file, compile it as-is
     javaFiles+=("$file")
-else
-    # If it doesn't, add .java extension then add to the array
+elif [[ "$file" == *.* && $first -eq 0 ]]; then
+    # Has a non-.java extension (e.g. data.csv, input.txt) and is not the
+    # entrypoint: treat as a data file and leave it untouched so the program
+    # can read it at runtime
+    :
+elif [[ $first -eq 1 ]] || grep -qE '^[[:space:]]*(package|import|(public[[:space:]]+)?(abstract[[:space:]]+|final[[:space:]]+)?(class|interface|enum|record)[[:space:]])' "$file" 2>/dev/null; then
+    # The entrypoint, or an extensionless file that looks like Java source:
+    # rename so the filename matches the class name, then compile
+    mv "$file" "${file}.java"
     javaFiles+=("${file}.java")
 fi
+first=0
 done
 
 # Compile all Java files at once
 javac "${javaFiles[@]}"
-
