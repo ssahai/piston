@@ -1,27 +1,11 @@
 #!/bin/bash
 
-# Initialize an empty array to hold the filenames
-declare -a javaFiles
-
-# Loop through each argument
-first=1
+# The entrypoint and any helper classes arrive without an extension, so give
+# them a .java suffix. Files that already have an extension are left alone:
+# .java sources compile as-is, and data files (data.csv, input.txt) stay put
+# so the program can read them at runtime.
 for file in "$@"; do
-if [[ "$file" == *.java ]]; then
-    # Already a Java source file, compile it as-is
-    javaFiles+=("$file")
-elif [[ "$file" == *.* && $first -eq 0 ]]; then
-    # Has a non-.java extension (e.g. data.csv, input.txt) and is not the
-    # entrypoint: treat as a data file and leave it untouched so the program
-    # can read it at runtime
-    :
-elif [[ $first -eq 1 ]] || grep -qE '^[[:space:]]*(package|import|(public[[:space:]]+)?(abstract[[:space:]]+|final[[:space:]]+)?(class|interface|enum|record)[[:space:]])' "$file" 2>/dev/null; then
-    # The entrypoint, or an extensionless file that looks like Java source:
-    # rename so the filename matches the class name, then compile
-    mv "$file" "${file}.java"
-    javaFiles+=("${file}.java")
-fi
-first=0
+    [[ "$file" == *.* ]] || mv "$file" "$file.java"
 done
 
-# Compile all Java files at once
-javac "${javaFiles[@]}"
+javac *.java
